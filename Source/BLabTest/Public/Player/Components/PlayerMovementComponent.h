@@ -4,11 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "PlayerMovementComponent.generated.h"
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class BLABTEST_API UPlayerMovementComponent : public UActorComponent
+class BLABTEST_API UPlayerMovementComponent : public UCharacterMovementComponent
 {
 	GENERATED_BODY()
 

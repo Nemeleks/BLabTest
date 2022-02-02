@@ -27,7 +27,7 @@ ABasePawn::ABasePawn()
 
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
 
-	MovementComponent = CreateDefaultSubobject<UPlayerMovementComponent>(TEXT("MovementComponent"));
+//	MovementComponent = CreateDefaultSubobject<UPlayerMovementComponent>(TEXT("MovementComponent"));
 
 }
 
@@ -57,6 +57,19 @@ void ABasePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+	CurrentForwardAxisValue = FMath::FInterpTo(CurrentForwardAxisValue, TargetForwardAxisValue, DeltaTime, MovementSmoothness);
+	const FVector CurrentLocation = GetActorLocation();
+	const FVector ForwardVector = GetActorForwardVector();
+	const FVector NewLocation = CurrentLocation + ForwardVector * CurrentForwardAxisValue * MovementSpeed * DeltaTime;
+
+	CurrentRotateAxisValue = FMath::FInterpTo(CurrentRotateAxisValue, TargetRotateAxisValue, DeltaTime, RotationSmoothness);
+	float YawRotation = RotationSpeed*CurrentRotateAxisValue*DeltaTime;
+	const FRotator CurrentRotation = GetActorRotation();
+	YawRotation += CurrentRotation.Yaw;
+	const FRotator NewRotation = FRotator(0,YawRotation,0);
+
+	SetActorLocationAndRotation(NewLocation, NewRotation, true);
 }
 
 // Called to bind functionality to input
@@ -65,3 +78,12 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void ABasePawn::MoveForward(float Amount)
+{
+	TargetForwardAxisValue = Amount;
+}
+
+void ABasePawn::RotateRight(float Amount)
+{
+	TargetRotateAxisValue = Amount;
+}

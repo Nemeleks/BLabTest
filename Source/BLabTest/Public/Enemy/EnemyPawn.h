@@ -4,31 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Player/BasePawn.h"
-#include "PlayerPawn.generated.h"
-
-class USpringArmComponent;
-class UCameraComponent;
+#include "EnemyPawn.generated.h"
 
 UCLASS()
-class BLABTEST_API APlayerPawn : public ABasePawn
+class BLABTEST_API AEnemyPawn : public ABasePawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	APlayerPawn();
+	AEnemyPawn();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
-	USpringArmComponent* SpringArmComponent;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
-	UCameraComponent* CameraComponent;
-
-
 
 public:
 	// Called every frame
@@ -36,10 +25,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-private:
-
-
-
+	void Rotate(float Amount) {RotateRight(Amount);}
+	void MoveF(float Amount) {MoveForward(Amount);}
+	
 };
-

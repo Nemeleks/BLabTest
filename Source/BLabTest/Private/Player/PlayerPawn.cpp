@@ -30,20 +30,6 @@ void APlayerPawn::BeginPlay()
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	CurrentForwardAxisValue = FMath::FInterpTo(CurrentForwardAxisValue, TargetForwardAxisValue, DeltaTime, MovementSmoothness);
-	const FVector CurrentLocation = GetActorLocation();
-	const FVector ForwardVector = GetActorForwardVector();
-	const FVector NewLocation = CurrentLocation + ForwardVector * CurrentForwardAxisValue * MovementSpeed * DeltaTime;
-
-	CurrentRotateAxisValue = FMath::FInterpTo(CurrentRotateAxisValue, TargetRotateAxisValue, DeltaTime, RotationSmoothness);
-	float YawRotation = RotationSpeed*CurrentRotateAxisValue*DeltaTime;
-	const FRotator CurrentRotation = GetActorRotation();
-	YawRotation += CurrentRotation.Yaw;
-	const FRotator NewRotation = FRotator(0,YawRotation,0);
-
-	SetActorLocationAndRotation(NewLocation, NewRotation, true);
-	
 }
 
 // Called to bind functionality to input
@@ -54,17 +40,8 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (PlayerInputComponent)
 	{
 		PlayerInputComponent->BindAxis("MoveForward", this, &APlayerPawn::MoveForward);
-		PlayerInputComponent->BindAxis("Rotate", this, &APlayerPawn::Rotate);
+		PlayerInputComponent->BindAxis("RotateRight", this, &APlayerPawn::RotateRight);
 		PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerPawn::Fire);
 	}
 }
 
-void APlayerPawn::MoveForward(float Amount)
-{
-	TargetForwardAxisValue = Amount;
-}
-
-void APlayerPawn::Rotate(float Amount)
-{
-	TargetRotateAxisValue = Amount;
-}
