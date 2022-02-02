@@ -7,6 +7,7 @@
 #include "DrawDebugHelpers.h"
 #include "NavigationSystem.h"
 #include "Enemy/EnemyPawn.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 void AEnemyAIController::BeginPlay()
 {
@@ -33,7 +34,6 @@ void AEnemyAIController::Targeting()
 
 void AEnemyAIController::MoveToNextPoint()
 {
-	
 	FVector PawnLocation = EnemyPawn->GetActorLocation();
 	FVector MoveDirection = NextPoint - PawnLocation;
 	MoveDirection.Normalize();
@@ -46,32 +46,60 @@ void AEnemyAIController::MoveToNextPoint()
 	Params.AddIgnoredActor(EnemyPawn);
 	TArray<AActor*> Attached;
 	EnemyPawn->GetAttachedActors(Attached);
+	Attached.Add(EnemyPawn);
 	Params.AddIgnoredActors(Attached);
+	FVector HalfSize = FVector(60.f,60.f,60.f);
 	
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, PawnLocation, TraceEnd, ECC_Visibility, Params) )
+	// if (GetWorld()->LineTraceSingleByChannel(HitResult, PawnLocation, TraceEnd, ECC_Visibility, Params) )
+	// {
+	// 	if (BlockingActor != HitResult.GetActor())
+	// 	{
+	// 		BlockingActor = HitResult.GetActor();
+	// 		HitNormal = HitResult.ImpactNormal;
+	// 		HitNormal.Normalize();
+	// 	}
+	// }
+
+	if (UKismetSystemLibrary::BoxTraceSingle(GetWorld(), PawnLocation, TraceEnd, HalfSize, EnemyPawn->GetActorRotation(), ETraceTypeQuery::TraceTypeQuery1, false, Attached, EDrawDebugTrace::Type::ForOneFrame,
+		HitResult, false))
 	{
-		FVector HitActorDirection = HitResult.Actor->GetActorLocation() - PawnLocation;
+	//	UE_LOG()
+		if (BlockingActor != HitResult.GetActor())
+		{
+			BlockingActor = HitResult.GetActor();
+			HitNormal = HitResult.ImpactNormal;
+			HitNormal.Normalize();
+		}
+	}
+	if (BlockingActor)
+	{
+		FVector HitActorDirection = BlockingActor->GetActorLocation() - PawnLocation;
 		HitActorDirection.Normalize();
 
-		float ForwardAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(ForwardDirection, HitActorDirection)));
-		float RightAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(RightDirection, HitActorDirection)));
+		float ForwardAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(ForwardDirection, HitNormal)));
+		float RightAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(RightDirection, HitNormal)));
 		UE_LOG(LogTemp, Warning, TEXT("ForwardAngle = %f"), ForwardAngle);
 		UE_LOG(LogTemp, Warning, TEXT("RightAngle = %f"), RightAngle);
 		
 		float RotationValue = 0.f;
-		if (ForwardAngle < 90.f)
+		if (ForwardAngle > 90.f)
 		{
 			RotationValue = 1.f;
 		}
-		if (RightAngle > 90.f)
+		else
 		{
-			RotationValue = -RotationValue;
+			BlockingActor = nullptr;
 		}
+		 if (RightAngle > 90.f)
+		 {
+		 	RotationValue = -RotationValue;
+		 }
 		EnemyPawn->Rotate(RotationValue);
-		EnemyPawn->MoveF(0.f);
+		EnemyPawn->MoveF(1.f);
 	}
-	 else
-	 {
+	
+	else
+	{
 		if (FVector::DistSquared(PawnLocation, NextPoint) <= FMath::Square(MovementAccuracy))
 		{
 			GetRandomPoint();
@@ -101,7 +129,6 @@ void AEnemyAIController::MoveToNextPoint()
 			EnemyPawn->MoveF(0.f);
 		}
 	}
-	
 }
 
 void AEnemyAIController::GetRandomPoint()

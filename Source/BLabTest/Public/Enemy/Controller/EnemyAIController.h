@@ -17,7 +17,10 @@ class BLABTEST_API AEnemyAIController : public AAIController
 protected:
 	
 	UPROPERTY()
-	AEnemyPawn* EnemyPawn;
+	AEnemyPawn* EnemyPawn = nullptr;;
+	
+	UPROPERTY()
+	AActor* BlockingActor = nullptr;
 
 	UPROPERTY()
 	UNavigationSystemV1* NavigationSystem;
@@ -45,6 +48,8 @@ protected:
 	void GetRandomPoint();
 
 	FVector NextPoint = FVector::ZeroVector;
+
+	FVector HitNormal;
 
 private:
 	
