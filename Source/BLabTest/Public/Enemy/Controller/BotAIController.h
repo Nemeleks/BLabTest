@@ -6,16 +6,26 @@
 #include "AIController.h"
 #include "BotAIController.generated.h"
 
+class UBLabAIPerceptionComponent;
+
 UCLASS()
 class BLABTEST_API ABotAIController : public AAIController
 {
 	GENERATED_BODY()
 
-protected:
+public:
+	ABotAIController();
 	
-	virtual void BeginPlay() override;
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UBLabAIPerceptionComponent* BLabAIPerceptionComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	FName FocusOnKeyName = "EnemyActor";
+	
+	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaSeconds) override;
 
-	virtual void OnPossess(APawn* InPawn) override;
+private:
+	AActor* GetFocusOnActor() const;
 };

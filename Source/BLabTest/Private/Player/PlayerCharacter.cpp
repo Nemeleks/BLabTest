@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameState/TestGameState.h"
 
 
 // Sets default values
@@ -16,8 +17,16 @@ APlayerCharacter::APlayerCharacter()
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 
+	SpringArmComponent->bDoCollisionTest = false;
+	SpringArmComponent->bInheritPitch = false;
+	SpringArmComponent->bInheritYaw = false;
+	SpringArmComponent->bInheritRoll = false;
+	SpringArmComponent->SocketOffset.X = -4500;
+
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	bUseControllerRotationYaw = false;
 }
 
 // Called when the game starts or when spawned
@@ -48,6 +57,8 @@ void APlayerCharacter::MoveForward(float Amount)
 
 void APlayerCharacter::RotateRight(float Amount)
 {
-	AddControllerYawInput(Amount);
+	//AddMovementInput(GetActorRightVector(), Amount);
+	//AddControllerYawInput(Amount);
+	AddActorLocalRotation(FRotator(0.f, Amount*MovementSpeed*GetWorld()->GetDeltaSeconds(), 0.f));
 }
 

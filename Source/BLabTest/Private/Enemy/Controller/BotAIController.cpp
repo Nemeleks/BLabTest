@@ -3,21 +3,15 @@
 
 #include "Enemy/Controller/BotAIController.h"
 
-#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Components/BLabAIPerceptionComponent.h"
 #include "Enemy/EnemyCharacter.h"
 
 
-// Called when the game starts or when spawned
-void ABotAIController::BeginPlay()
+ABotAIController::ABotAIController()
 {
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ABotAIController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	BLabAIPerceptionComponent = CreateDefaultSubobject<UBLabAIPerceptionComponent>(TEXT("BLabAIPerceprionComponent"));
+	SetPerceptionComponent(*BLabAIPerceptionComponent);
 }
 
 void ABotAIController::OnPossess(APawn* InPawn)
@@ -29,5 +23,22 @@ void ABotAIController::OnPossess(APawn* InPawn)
 		UE_LOG(LogTemp, Warning, TEXT("RunTree"));
 		RunBehaviorTree(Bot->GetBehaviorTree());
 	}
+}
+
+void ABotAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	const auto AimActor = GetFocusOnActor();
+	SetFocus(AimActor);
+}
+
+AActor* ABotAIController::GetFocusOnActor() const
+{
+	if (!GetBlackboardComponent()) 
+	{
+		return nullptr;
+	}
+	return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));
 }
 

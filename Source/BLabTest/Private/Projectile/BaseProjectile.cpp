@@ -53,7 +53,7 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 		UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
 		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
 		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
-		if (GetInstigator()->GetClass() == APlayerCharacter::StaticClass())
+		if (OtherActor != GetInstigator())
 		{
 			GameState->AddPlayerScore(1);
 		}
@@ -61,13 +61,16 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 		{
 			GameState->AddEnemyScore(-1);
 		}
+			
+		
 	}
 	if (const auto PlayerPawn = Cast<APlayerCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Hit Player"));
 		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
 		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
-		if (GetInstigator()->GetClass() == AEnemyCharacter::StaticClass())
+
+		if (OtherActor != GetInstigator())
 		{
 			GameState->AddEnemyScore(1);
 		}
@@ -75,5 +78,6 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 		{
 			GameState->AddPlayerScore(-1);
 		}
+		
 	}
 }

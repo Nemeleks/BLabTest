@@ -13,7 +13,7 @@ void UScoreTableWidget::NativeConstruct()
 
 bool UScoreTableWidget::Initialize()
 {
-	
+	Super::Initialize();
 
 	if (PlayerTeamScore)
 	{
@@ -24,7 +24,7 @@ bool UScoreTableWidget::Initialize()
 		EnemyTeamScore->TextDelegate.BindUFunction(this, "SetEnemyTeamScore");
 	}
 	
-	return Super::Initialize();
+	return true;
 }
 
 FText UScoreTableWidget::SetPlayerTeamScore()

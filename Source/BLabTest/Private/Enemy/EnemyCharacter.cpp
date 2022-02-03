@@ -4,15 +4,22 @@
 #include "Enemy/EnemyCharacter.h"
 
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "Enemy/Controller/BotAIController.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	AIControllerClass = ABotAIController::StaticClass();
 
-//	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComponent"));
+	bUseControllerRotationYaw = false;
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		GetCharacterMovement()->RotationRate = FRotator(0.f,360.f,0.f);
+	}
 }
 
 // Called when the game starts or when spawned
