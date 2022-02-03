@@ -23,13 +23,49 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	if (EnemyPawn)
 	{
-		MoveToNextPoint();
+	
 		Targeting();
+		if (bIsAttacking)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("TRUE"));
+		}
+		if (!bIsAttacking)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("FALSE"));
+			MoveToNextPoint();
+		}
+		
 	}
 }
 
 void AEnemyAIController::Targeting()
 {
+	FVector EnemyLocation = EnemyPawn->GetActorLocation();
+	FVector EnemyForwardVector = EnemyPawn->GetActorForwardVector();
+	FVector TraceEnd = EnemyLocation + EnemyForwardVector * 2000;
+	FHitResult HitResult;
+	TArray<AActor*> ActorsToIgnore;
+	EnemyPawn->GetAttachedActors(ActorsToIgnore);
+	ActorsToIgnore.Add(EnemyPawn);
+	if (UKismetSystemLibrary::SphereTraceSingle(GetWorld(),EnemyLocation, TraceEnd, 15.f, ETraceTypeQuery::TraceTypeQuery2,
+		false,ActorsToIgnore, EDrawDebugTrace::Type::ForOneFrame, HitResult, false ))
+	{
+		if (HitResult.Actor == GetWorld()->GetFirstPlayerController()->GetPawn())
+		{
+			bIsAttacking = true;
+			UE_LOG(LogTemp, Warning, TEXT("Hit"));
+			EnemyPawn->Shoot();
+			EnemyPawn->MoveF(0.f);
+		}
+		else
+		{
+			bIsAttacking = false;
+		}
+	}
+	else
+	{
+		bIsAttacking = false;
+	}
 }
 
 void AEnemyAIController::MoveToNextPoint()
@@ -49,21 +85,10 @@ void AEnemyAIController::MoveToNextPoint()
 	Attached.Add(EnemyPawn);
 	Params.AddIgnoredActors(Attached);
 	FVector HalfSize = FVector(60.f,60.f,60.f);
-	
-	// if (GetWorld()->LineTraceSingleByChannel(HitResult, PawnLocation, TraceEnd, ECC_Visibility, Params) )
-	// {
-	// 	if (BlockingActor != HitResult.GetActor())
-	// 	{
-	// 		BlockingActor = HitResult.GetActor();
-	// 		HitNormal = HitResult.ImpactNormal;
-	// 		HitNormal.Normalize();
-	// 	}
-	// }
 
 	if (UKismetSystemLibrary::BoxTraceSingle(GetWorld(), PawnLocation, TraceEnd, HalfSize, EnemyPawn->GetActorRotation(), ETraceTypeQuery::TraceTypeQuery1, false, Attached, EDrawDebugTrace::Type::ForOneFrame,
 		HitResult, false))
 	{
-	//	UE_LOG()
 		if (BlockingActor != HitResult.GetActor())
 		{
 			BlockingActor = HitResult.GetActor();
@@ -78,8 +103,8 @@ void AEnemyAIController::MoveToNextPoint()
 
 		float ForwardAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(ForwardDirection, HitNormal)));
 		float RightAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(RightDirection, HitNormal)));
-		UE_LOG(LogTemp, Warning, TEXT("ForwardAngle = %f"), ForwardAngle);
-		UE_LOG(LogTemp, Warning, TEXT("RightAngle = %f"), RightAngle);
+		//UE_LOG(LogTemp, Warning, TEXT("ForwardAngle = %f"), ForwardAngle);
+		//UE_LOG(LogTemp, Warning, TEXT("RightAngle = %f"), RightAngle);
 		
 		float RotationValue = 0.f;
 		if (ForwardAngle > 90.f)

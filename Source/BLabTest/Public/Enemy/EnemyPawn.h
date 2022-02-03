@@ -27,5 +27,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void Rotate(float Amount) {RotateRight(Amount);}
 	void MoveF(float Amount) {MoveForward(Amount);}
+	void Shoot() {Fire();}
 	
 };

@@ -53,5 +53,6 @@ protected:
 
 private:
 	
-	bool bCamMoveForward = true;
+	bool bIsAttacking;
+	
 };

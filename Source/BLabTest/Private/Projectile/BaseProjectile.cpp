@@ -13,16 +13,10 @@ ABaseProjectile::ABaseProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-		
-	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	SphereCollider->SetupAttachment(RootComponent);
-	RootComponent = SphereCollider;
-	SphereCollider->SetSphereRadius(6.f);
-	SphereCollider->IgnoreActorWhenMoving(this, true);
-	SphereCollider->OnComponentBeginOverlap.AddDynamic(this, &ABaseProjectile::OnComponentBeginOverlap);
-
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	MeshComponent->SetupAttachment(SphereCollider);
+	SetRootComponent(MeshComponent);
+
+	MeshComponent->OnComponentHit.AddDynamic(this, &ThisClass::ABaseProjectile::OnComponentHit);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovementComponent->OnProjectileStop.AddDynamic(this, &ABaseProjectile::OnProjectileStop);
@@ -41,20 +35,24 @@ void ABaseProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ABaseProjectile::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-
-	
-}
-
 void ABaseProjectile::OnProjectileStop(const FHitResult& ImpactResult)
 {
 	Destroy();
 }
 
-void ABaseProjectile::FireInDirection(const FVector& ShootDirection)
+void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& HitResult)
 {
-
-	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	if (const auto BlockingVolume = Cast<ABlockingVolume>(OtherActor))
+	{
+		Destroy();
+	}
+	if (const auto BotPawn = Cast<AEnemyCharacter>(OtherActor))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
+	}
+	if (const auto PlayerPawn = Cast<APlayerCharacter>(OtherActor))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit Player"));
+	}
 }

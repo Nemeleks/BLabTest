@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Enemy/EnemyCharacter.h"
+#include "Engine/BlockingVolume.h"
 #include "GameFramework/Actor.h"
+#include "Player/PlayerCharacter.h"
 #include "BaseProjectile.generated.h"
 
 class USphereComponent;
@@ -23,9 +26,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
-	USphereComponent* SphereCollider;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* MeshComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
@@ -34,12 +34,14 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
 	UFUNCTION()
-	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
-
+	virtual void OnComponentHit(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, 
+		FVector NormalImpulse, const FHitResult& HitResult);
+	
 	UFUNCTION()
 	void OnProjectileStop( const FHitResult& ImpactResult);
 
 	void FireInDirection(const FVector& ShootDirection);
 };
+

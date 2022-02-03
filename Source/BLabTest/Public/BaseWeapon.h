@@ -8,6 +8,7 @@
 
 class UArrowComponent;
 class ABaseProjectile;
+class ATestProjectile;
 
 UCLASS()
 class BLABTEST_API ABaseWeapon : public AActor
@@ -30,6 +31,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
 	TSubclassOf<ABaseProjectile> ProjectileClass;
+	//TSubclassOf<ATestProjectile> ProjectileClass;
 
 public:
 	// Called every frame

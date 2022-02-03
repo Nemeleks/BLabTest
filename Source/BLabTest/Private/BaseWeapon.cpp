@@ -5,6 +5,7 @@
 
 #include "Components/ArrowComponent.h"
 #include "Projectile/BaseProjectile.h"
+#include "Projectile/TestProjectile.h"
 
 
 // Sets default values
@@ -47,6 +48,7 @@ void ABaseWeapon::Fire()
 		const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 		const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 		GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
+		//GetWorld()->SpawnActor<ATestProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
 	}
 }
 
