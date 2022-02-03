@@ -15,7 +15,8 @@ public class BLabTest : ModuleRules
 			"Engine",
 			"InputCore",
 			"NavigationSystem",
-			"AIModule"
+			"AIModule",
+			"UMG"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

@@ -47,8 +47,9 @@ void ABaseWeapon::Fire()
 
 		const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 		const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
-		GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
+		const auto Projectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
 		//GetWorld()->SpawnActor<ATestProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
+		Projectile->SetInstigator(GetInstigator());
 	}
 }
 

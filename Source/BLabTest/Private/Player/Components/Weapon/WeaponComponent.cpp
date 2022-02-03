@@ -39,6 +39,7 @@ void UWeaponComponent::SpawnWeapon(FVector SpawnLocation, FRotator SpawnRotation
 		Params.Owner = GetOwner();
 		CurrentWeapon = GetWorld()->SpawnActor<ABaseWeapon>(WeaponClass, SpawnLocation, SpawnRotation, Params);
 		CurrentWeapon->SetActorEnableCollision(false);
+		CurrentWeapon->SetInstigator(Cast<APawn>(GetOwner()));
 	}
 }
 

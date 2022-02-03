@@ -5,6 +5,7 @@
 
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameState/TestGameState.h"
 
 
 // Sets default values
@@ -50,9 +51,29 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 	if (const auto BotPawn = Cast<AEnemyCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
+		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
+		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
+		if (GetInstigator()->GetClass() == APlayerCharacter::StaticClass())
+		{
+			GameState->AddPlayerScore(1);
+		}
+		else
+		{
+			GameState->AddEnemyScore(-1);
+		}
 	}
 	if (const auto PlayerPawn = Cast<APlayerCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Hit Player"));
+		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
+		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
+		if (GetInstigator()->GetClass() == AEnemyCharacter::StaticClass())
+		{
+			GameState->AddEnemyScore(1);
+		}
+		else
+		{
+			GameState->AddPlayerScore(-1);
+		}
 	}
 }
