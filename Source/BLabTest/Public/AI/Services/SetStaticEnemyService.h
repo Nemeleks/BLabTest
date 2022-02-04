@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
-#include "FindEnemyService.generated.h"
+#include "SetStaticEnemyService.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BLABTEST_API UFindEnemyService : public UBTService
+class BLABTEST_API USetStaticEnemyService : public UBTService
 {
 	GENERATED_BODY()
 
 public:
-	UFindEnemyService();
+	USetStaticEnemyService();
 
 	virtual void OnGameplayTaskActivated(UGameplayTask& Task) override;
 	virtual void OnGameplayTaskDeactivated(UGameplayTask& Task) override;
@@ -23,8 +23,7 @@ public:
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	FBlackboardKeySelector EnemyActorInSightKey;
+	FBlackboardKeySelector EnemyActorKey;
 
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
-	
 };

@@ -12,7 +12,6 @@ void ABLabTestGameModeBase::NewRound()
 	RestartPlayer(GetWorld()->GetFirstPlayerController());
 	if (AISpawnPoint)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SpawnPoint OK"));
 		AISpawnPoint->DestroyAI();
 		AISpawnPoint->SpawnAI();
 	}

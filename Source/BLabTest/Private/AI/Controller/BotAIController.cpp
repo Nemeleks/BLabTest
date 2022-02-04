@@ -20,7 +20,6 @@ void ABotAIController::OnPossess(APawn* InPawn)
 	const auto Bot = Cast<AEnemyCharacter>(InPawn);
 	if (Bot)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("RunTree"));
 		RunBehaviorTree(Bot->GetBehaviorTree());
 	}
 }

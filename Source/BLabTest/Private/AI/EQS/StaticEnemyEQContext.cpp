@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AI/EQS/EnemyEnvQueryContext.h"
+#include "AI/EQS/StaticEnemyEQContext.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "EnvironmentQuery/Items/EnvQueryItemType_Actor.h"
 
-void UEnemyEnvQueryContext::ProvideContext(FEnvQueryInstance& QueryInstance, FEnvQueryContextData& ContextData) const
+void UStaticEnemyEQContext::ProvideContext(FEnvQueryInstance& QueryInstance, FEnvQueryContextData& ContextData) const
 {
 	//Super::ProvideContext(QueryInstance, ContextData);
 	const auto QueryOwner = Cast<AActor>(QueryInstance.Owner.Get());
@@ -18,6 +18,6 @@ void UEnemyEnvQueryContext::ProvideContext(FEnvQueryInstance& QueryInstance, FEn
 	{
 		return;
 	}
-	const auto ContextActor = Blackboard->GetValueAsObject(EnemyActorInSightKeyName);
+	const auto ContextActor = Blackboard->GetValueAsObject(EnemyActorKeyName);
 	UEnvQueryItemType_Actor::SetContextHelper(ContextData, Cast<AActor>(ContextActor));
 }

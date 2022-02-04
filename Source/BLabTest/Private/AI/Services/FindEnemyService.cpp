@@ -34,7 +34,7 @@ void UFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	const auto PerceptionComponent = Cast<UBLabAIPerceptionComponent>(Controller->GetComponentByClass(UBLabAIPerceptionComponent::StaticClass()));
 	if (PerceptionComponent)
 	{
-		Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetEnemy());
+		Blackboard->SetValueAsObject(EnemyActorInSightKey.SelectedKeyName, PerceptionComponent->GetEnemy());
 	}
 	
 	

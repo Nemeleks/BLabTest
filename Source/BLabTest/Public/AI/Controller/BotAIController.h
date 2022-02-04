@@ -21,7 +21,7 @@ protected:
 	UBLabAIPerceptionComponent* BLabAIPerceptionComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	FName FocusOnKeyName = "EnemyActor";
+	FName FocusOnKeyName = "EnemyActorInSight";
 	
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaSeconds) override;

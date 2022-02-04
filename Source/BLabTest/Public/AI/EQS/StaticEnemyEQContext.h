@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "EnvironmentQuery/EnvQueryContext.h"
-#include "EnemyEnvQueryContext.generated.h"
+#include "StaticEnemyEQContext.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BLABTEST_API UEnemyEnvQueryContext : public UEnvQueryContext
+class BLABTEST_API UStaticEnemyEQContext : public UEnvQueryContext
 {
 	GENERATED_BODY()
 
@@ -19,6 +19,6 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	FName EnemyActorInSightKeyName = "EnemyActorInSight";
-	
+	FName EnemyActorKeyName = "EnemyActorKey";
+
 };

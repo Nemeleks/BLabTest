@@ -25,13 +25,10 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 	{
 	
 		Targeting();
-		if (bIsAttacking)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("TRUE"));
-		}
+	
 		if (!bIsAttacking)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("FALSE"));
+			
 			MoveToNextPoint();
 		}
 		
@@ -53,7 +50,6 @@ void AEnemyAIController::Targeting()
 		if (HitResult.Actor == GetWorld()->GetFirstPlayerController()->GetPawn())
 		{
 			bIsAttacking = true;
-			UE_LOG(LogTemp, Warning, TEXT("Hit"));
 			EnemyPawn->Shoot();
 			EnemyPawn->MoveF(0.f);
 		}

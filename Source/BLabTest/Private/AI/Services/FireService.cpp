@@ -31,13 +31,12 @@ void UFireService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory
 		return;
 	}
 
-	const auto HasAim = Blackboard && Blackboard->GetValueAsObject(EnemyActorKey.SelectedKeyName);
+	const auto HasAim = Blackboard && Blackboard->GetValueAsObject(EnemyActorInSightKey.SelectedKeyName);
 
 	if (const auto WeaponComponent = Cast<UWeaponComponent>(Controller->GetPawn()->GetComponentByClass(UWeaponComponent::StaticClass())))
 	{
 		if (HasAim)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Fire!"));
 			WeaponComponent->Fire();
 		}
 	}

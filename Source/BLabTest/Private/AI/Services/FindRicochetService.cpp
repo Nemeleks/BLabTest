@@ -64,7 +64,6 @@ void UFindRicochetService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
 						if (PreviousHit.Actor == GetWorld()->GetFirstPlayerController()->GetPawn())
 						{
 							Blackboard->SetValueAsBool(RicochetAttackKey.SelectedKeyName, true);
-							UE_LOG(LogTemp,Warning,TEXT("i see player!"))
 							break;
 						}
 					}

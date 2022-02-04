@@ -57,32 +57,24 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 	{
 		return;
 	}
+	
 	if (const auto BlockingVolume = Cast<ABlockingVolume>(OtherActor))
 	{
 		Destroy();
 	}
+	
 	if (const auto BotPawn = Cast<AEnemyCharacter>(OtherActor))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"));
-		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
 		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
 		if (OtherActor != GetInstigator())
 		{
 			GameState->AddPlayerScore(1);
 			GameMode->NewRound();
 		}
-		else
-		{
-			GameState->AddEnemyScore(-1);
-			GameMode->NewRound();
-		}
-			
-		
 	}
+	
 	if (const auto PlayerPawn = Cast<APlayerCharacter>(OtherActor))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Player"));
-		UE_LOG(LogTemp, Warning, TEXT("Instigator = %s"), *GetInstigator()->GetName());
 		const auto GameState = Cast<ATestGameState>(GetWorld()->GetGameState());
 
 		if (OtherActor != GetInstigator())
@@ -90,12 +82,6 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 			GameState->AddEnemyScore(1);
 			GameMode->NewRound();
 		}
-		else
-		{
-			GameState->AddPlayerScore(-1);
-			GameMode->NewRound();
-		}
-		
 	}
 }
 
