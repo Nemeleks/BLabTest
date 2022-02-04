@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Projectile/BaseProjectile.h"
+#include "Weapons/Projectile/BaseProjectile.h"
 
+#include "AI/EnemyCharacter.h"
 #include "Components/SphereComponent.h"
+#include "Engine/BlockingVolume.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "GameState/TestGameState.h"
+#include "GameMode/GameState/TestGameState.h"
 
 
 // Sets default values

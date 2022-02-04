@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Projectile/TestProjectile.h"
+#include "Weapons/Projectile/TestProjectile.h"
 
 
 // Sets default values

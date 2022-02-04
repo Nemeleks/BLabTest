@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Enemy/EnemyCharacter.h"
+#include "AI/EnemyCharacter.h"
 
 #include "BehaviorTree/BehaviorTreeComponent.h"
-#include "Enemy/Controller/BotAIController.h"
+#include "AI/Controller/BotAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 

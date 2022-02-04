@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BaseWeapon.h"
+#include "Weapons/BaseWeapon.h"
 
 #include "Components/ArrowComponent.h"
-#include "Projectile/BaseProjectile.h"
-#include "Projectile/TestProjectile.h"
+#include "Weapons/Projectile/BaseProjectile.h"
+#include "Weapons/Projectile/TestProjectile.h"
 
 
 // Sets default values

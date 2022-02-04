@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Enemy/Controller/EnemyAIController.h"
+#include "AI/Controller/EnemyAIController.h"
 
-#include "BaseWeapon.h"
+#include "Weapons/BaseWeapon.h"
 #include "DrawDebugHelpers.h"
 #include "NavigationSystem.h"
-#include "Enemy/EnemyPawn.h"
+#include "AI/EnemyPawn.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void AEnemyAIController::BeginPlay()

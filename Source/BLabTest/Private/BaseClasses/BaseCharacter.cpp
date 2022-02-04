@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Player/BaseCharacter.h"
+#include "BaseClasses/BaseCharacter.h"
 
 #include "Components/ArrowComponent.h"
-#include "Player/Components/Weapon/WeaponComponent.h"
+#include "Components/WeaponComponent.h"
 
 
 // Sets default values

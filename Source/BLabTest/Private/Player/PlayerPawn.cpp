@@ -4,7 +4,6 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Player/Components/Weapon/WeaponComponent.h"
 
 
 // Sets default values

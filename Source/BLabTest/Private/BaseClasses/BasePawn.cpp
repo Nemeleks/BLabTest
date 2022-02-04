@@ -1,14 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Player/BasePawn.h"
+#include "BaseClasses/BasePawn.h"
 
-#include "BaseWeapon.h"
+#include "Weapons/BaseWeapon.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Player/Components/PlayerMovementComponent.h"
-#include "Player/Components/Weapon/WeaponComponent.h"
+#include "Components/WeaponComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -26,8 +25,6 @@ ABasePawn::ABasePawn()
 	WeaponSpawnPoint->SetupAttachment(MeshComponent);
 
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
-
-//	MovementComponent = CreateDefaultSubobject<UPlayerMovementComponent>(TEXT("MovementComponent"));
 
 }
 

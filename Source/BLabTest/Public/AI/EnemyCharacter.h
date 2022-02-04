@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Player/BaseCharacter.h"
+#include "BaseClasses/BaseCharacter.h"
 #include "EnemyCharacter.generated.h"
 
 class UBehaviorTree;

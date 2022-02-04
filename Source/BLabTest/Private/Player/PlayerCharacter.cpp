@@ -5,7 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "GameState/TestGameState.h"
+#include "GameMode/GameState/TestGameState.h"
 
 
 // Sets default values

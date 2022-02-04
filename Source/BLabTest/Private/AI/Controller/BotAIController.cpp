@@ -1,11 +1,11 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Enemy/Controller/BotAIController.h"
+#include "AI/Controller/BotAIController.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/BLabAIPerceptionComponent.h"
-#include "Enemy/EnemyCharacter.h"
+#include "AI/EnemyCharacter.h"
 
 
 ABotAIController::ABotAIController()

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BaseCharacter.h"
+#include "BaseClasses/BaseCharacter.h"
 #include "PlayerCharacter.generated.h"
 
 class UCameraComponent;

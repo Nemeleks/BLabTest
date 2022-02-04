@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Player/Components/Weapon/WeaponComponent.h"
-#include "BaseWeapon.h"
-#include "Components/ArrowComponent.h"
+#include "Components/WeaponComponent.h"
+#include "Weapons/BaseWeapon.h"
 
 
 // Sets default values for this component's properties

@@ -3,8 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Enemy/EnemyCharacter.h"
-#include "Engine/BlockingVolume.h"
 #include "GameFramework/Actor.h"
 #include "Player/PlayerCharacter.h"
 #include "BaseProjectile.generated.h"
@@ -41,7 +39,5 @@ public:
 	
 	UFUNCTION()
 	void OnProjectileStop( const FHitResult& ImpactResult);
-
-	void FireInDirection(const FVector& ShootDirection);
 };
 

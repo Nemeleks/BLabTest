@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Player/BasePawn.h"
+#include "BaseClasses/BasePawn.h"
 #include "PlayerPawn.generated.h"
 
 class USpringArmComponent;

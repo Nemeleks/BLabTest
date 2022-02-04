@@ -5,7 +5,7 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "Player/Components/Weapon/WeaponComponent.h"
+#include "Components/WeaponComponent.h"
 
 UFireService::UFireService()
 {

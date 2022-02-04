@@ -4,7 +4,7 @@
 #include "UI/ScoreTableWidget.h"
 
 #include "Components/TextBlock.h"
-#include "GameState/TestGameState.h"
+#include "GameMode/GameState/TestGameState.h"
 
 void UScoreTableWidget::NativeConstruct()
 {
