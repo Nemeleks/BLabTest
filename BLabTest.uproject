@@ -19,6 +19,7 @@
 		"IOS",
 		"Linux",
 		"Mac",
-		"Windows"
+		"Windows",
+		"WindowsNoEditor"
 	]
 }

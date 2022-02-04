@@ -40,5 +40,6 @@ public:
 
 private:
 	void MoveForward(float Amount);
+	void MoveRight(float Amount);
 	void RotateRight(float Amount);
 };

@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameMode/GameState/TestGameState.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 // Sets default values
@@ -39,6 +40,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 }
 
 // Called to bind functionality to input
@@ -46,6 +48,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ThisClass::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("RotateRight", this, &ThisClass::RotateRight);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ThisClass::Fire);
 }
@@ -55,9 +58,14 @@ void APlayerCharacter::MoveForward(float Amount)
 	AddMovementInput(GetActorForwardVector(), Amount);
 }
 
+void APlayerCharacter::MoveRight(float Amount)
+{
+	AddMovementInput(GetActorRightVector(), Amount);
+}
+
 void APlayerCharacter::RotateRight(float Amount)
 {
-	//AddMovementInput(GetActorRightVector(), Amount);
+	
 	//AddControllerYawInput(Amount);
 	AddActorLocalRotation(FRotator(0.f, Amount*MovementSpeed*GetWorld()->GetDeltaSeconds(), 0.f));
 }

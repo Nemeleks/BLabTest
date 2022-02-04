@@ -3,6 +3,7 @@
 
 #include "AI/EnemyCharacter.h"
 
+#include "DrawDebugHelpers.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "AI/Controller/BotAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -26,7 +27,6 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

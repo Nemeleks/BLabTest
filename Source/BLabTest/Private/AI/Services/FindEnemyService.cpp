@@ -25,14 +25,18 @@ void UFindEnemyService::OnGameplayTaskDeactivated(UGameplayTask& Task)
 void UFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	const auto Blackboard = OwnerComp.GetBlackboardComponent();
-	if (Blackboard)
+	const auto Controller = OwnerComp.GetAIOwner();
+	if (!Blackboard && !Controller)
 	{
-		const auto Controller = OwnerComp.GetAIOwner();
-		const auto PerceptionComponent = Cast<UBLabAIPerceptionComponent>(Controller->GetComponentByClass(UBLabAIPerceptionComponent::StaticClass()));
-		if (PerceptionComponent)
-		{
-			Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetEnemy());
-		}
+		return;
 	}
+	
+	const auto PerceptionComponent = Cast<UBLabAIPerceptionComponent>(Controller->GetComponentByClass(UBLabAIPerceptionComponent::StaticClass()));
+	if (PerceptionComponent)
+	{
+		Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetEnemy());
+	}
+	
+	
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }
