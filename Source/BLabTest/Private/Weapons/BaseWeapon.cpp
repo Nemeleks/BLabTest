@@ -4,6 +4,7 @@
 #include "Weapons/BaseWeapon.h"
 
 #include "Components/ArrowComponent.h"
+#include "Subsystems/ActorPoolSubsystem.h"
 #include "Weapons/Projectile/BaseProjectile.h"
 #include "Weapons/Projectile/TestProjectile.h"
 
@@ -41,15 +42,23 @@ void ABaseWeapon::Fire()
 {
 	if (ProjectileClass &&bCanFire)
 	{
-		FActorSpawnParameters Params;
-		Params.Instigator = GetInstigator();
-		Params.Owner = this;
+		// FActorSpawnParameters Params;
+		// Params.Instigator = GetInstigator();
+		// Params.Owner = this;
+		//
+		// const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+		// const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+		// const auto Projectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
+		UActorPoolSubsystem* Pool = GetWorld()->GetSubsystem<UActorPoolSubsystem>();
+		FTransform SpawnTransform(ProjectileSpawnPoint->GetComponentRotation(), ProjectileSpawnPoint->GetComponentLocation(), FVector::OneVector);
+		ABaseProjectile* Projectile = Cast<ABaseProjectile>(Pool->MoveActorFromPool(ProjectileClass, SpawnTransform));
 
-		const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-		const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
-		const auto Projectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
-		//GetWorld()->SpawnActor<ATestProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
-		Projectile->SetInstigator(GetInstigator());
+		if (Projectile)
+		{
+			Projectile->SetInstigator(GetInstigator());
+			Projectile->Start(ProjectileSpawnPoint->GetForwardVector());
+		}
+		
 	}
 }
 

@@ -32,6 +32,9 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void Start(const FVector& FireDirection);
+	void Stop();
 	
 	UFUNCTION()
 	virtual void OnComponentHit(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, 
@@ -42,6 +45,9 @@ public:
 
 	UFUNCTION()
 	void SelfDestroy();
+
+private:
+	FVector StartPosition;
 };
 
 
