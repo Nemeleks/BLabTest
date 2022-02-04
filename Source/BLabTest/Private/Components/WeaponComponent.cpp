@@ -22,6 +22,15 @@ void UWeaponComponent::BeginPlay()
 	
 }
 
+void UWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->Destroy();
+	}
+}
+
 void UWeaponComponent::Fire()
 {
 	if (CurrentWeapon)

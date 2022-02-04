@@ -7,6 +7,7 @@
 #include "Components/SphereComponent.h"
 #include "Engine/BlockingVolume.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameMode/BLabTestGameModeBase.h"
 #include "GameMode/GameState/TestGameState.h"
 
 
@@ -29,7 +30,12 @@ ABaseProjectile::ABaseProjectile()
 void ABaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	const auto GameMode = Cast<ABLabTestGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode)
+	{
+		GameMode->OnNewRound.AddDynamic(this, &ThisClass::SelfDestroy);
+	}
 }
 
 // Called every frame
@@ -46,6 +52,11 @@ void ABaseProjectile::OnProjectileStop(const FHitResult& ImpactResult)
 void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& HitResult)
 {
+	const auto GameMode = Cast<ABLabTestGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (!GameMode)
+	{
+		return;
+	}
 	if (const auto BlockingVolume = Cast<ABlockingVolume>(OtherActor))
 	{
 		Destroy();
@@ -58,10 +69,12 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 		if (OtherActor != GetInstigator())
 		{
 			GameState->AddPlayerScore(1);
+			GameMode->NewRound();
 		}
 		else
 		{
 			GameState->AddEnemyScore(-1);
+			GameMode->NewRound();
 		}
 			
 		
@@ -75,11 +88,18 @@ void ABaseProjectile::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* 
 		if (OtherActor != GetInstigator())
 		{
 			GameState->AddEnemyScore(1);
+			GameMode->NewRound();
 		}
 		else
 		{
 			GameState->AddPlayerScore(-1);
+			GameMode->NewRound();
 		}
 		
 	}
+}
+
+void ABaseProjectile::SelfDestroy()
+{
+	Destroy();
 }

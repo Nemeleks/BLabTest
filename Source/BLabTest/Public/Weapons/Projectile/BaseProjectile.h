@@ -39,5 +39,9 @@ public:
 	
 	UFUNCTION()
 	void OnProjectileStop( const FHitResult& ImpactResult);
+
+	UFUNCTION()
+	void SelfDestroy();
 };
+
 
