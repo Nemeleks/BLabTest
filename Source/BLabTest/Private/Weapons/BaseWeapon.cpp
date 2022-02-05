@@ -42,13 +42,6 @@ void ABaseWeapon::Fire()
 {
 	if (ProjectileClass &&bCanFire)
 	{
-		// FActorSpawnParameters Params;
-		// Params.Instigator = GetInstigator();
-		// Params.Owner = this;
-		//
-		// const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-		// const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
-		// const auto Projectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
 		UActorPoolSubsystem* Pool = GetWorld()->GetSubsystem<UActorPoolSubsystem>();
 		FTransform SpawnTransform(ProjectileSpawnPoint->GetComponentRotation(), ProjectileSpawnPoint->GetComponentLocation(), FVector::OneVector);
 		ABaseProjectile* Projectile = Cast<ABaseProjectile>(Pool->MoveActorFromPool(ProjectileClass, SpawnTransform));

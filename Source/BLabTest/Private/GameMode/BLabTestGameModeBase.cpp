@@ -4,6 +4,7 @@
 #include "GameMode/BLabTestGameModeBase.h"
 
 #include "AI/AISpawnPoint.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 void ABLabTestGameModeBase::NewRound()
 {
@@ -14,5 +15,17 @@ void ABLabTestGameModeBase::NewRound()
 	{
 		AISpawnPoint->DestroyAI();
 		AISpawnPoint->SpawnAI();
+	}
+}
+
+void ABLabTestGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	const auto Controller = GetWorld()->GetFirstPlayerController();
+	if (Controller)
+	{
+		Controller->SetShowMouseCursor(false);
+		UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);
 	}
 }

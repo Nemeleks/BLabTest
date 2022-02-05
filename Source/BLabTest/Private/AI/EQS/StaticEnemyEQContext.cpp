@@ -18,6 +18,11 @@ void UStaticEnemyEQContext::ProvideContext(FEnvQueryInstance& QueryInstance, FEn
 	{
 		return;
 	}
-	const auto ContextActor = Blackboard->GetValueAsObject(EnemyActorKeyName);
+	auto Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (!Pawn)
+	{
+		return;
+	}
+	auto ContextActor = Pawn;
 	UEnvQueryItemType_Actor::SetContextHelper(ContextData, Cast<AActor>(ContextActor));
 }

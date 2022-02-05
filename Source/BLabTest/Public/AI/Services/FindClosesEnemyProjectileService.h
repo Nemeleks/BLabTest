@@ -4,18 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
-#include "SetStaticEnemyService.generated.h"
+
+#include "FindClosesEnemyProjectileService.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BLABTEST_API USetStaticEnemyService : public UBTService
+class BLABTEST_API UFindClosesEnemyProjectileService : public UBTService
 {
 	GENERATED_BODY()
 
 public:
-	USetStaticEnemyService();
+	UFindClosesEnemyProjectileService();
 
 	virtual void OnGameplayTaskActivated(UGameplayTask& Task) override;
 	virtual void OnGameplayTaskDeactivated(UGameplayTask& Task) override;
@@ -23,7 +24,13 @@ public:
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	FBlackboardKeySelector EnemyActorKey;
+	FBlackboardKeySelector EnemyProjectileKey;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	float TraceRadius = 1500;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	float ProjectileSphereTraceRadius = 40;
 
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

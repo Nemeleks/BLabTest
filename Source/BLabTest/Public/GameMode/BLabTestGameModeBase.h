@@ -21,6 +21,9 @@ public:
 	
 	FOnNewRound OnNewRound;
 protected:
+
+	virtual void BeginPlay() override;
+	
 	UPROPERTY()
 	AAISpawnPoint* AISpawnPoint = nullptr;
 
