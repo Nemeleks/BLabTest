@@ -31,7 +31,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
 	TSubclassOf<ABaseProjectile> ProjectileClass;
-	//TSubclassOf<ATestProjectile> ProjectileClass;
 
 public:
 	// Called every frame
