@@ -18,4 +18,8 @@ protected:
 
 	UFUNCTION(Exec)
 	void DumpActorPoolStats();
+
+	virtual void SetupInputComponent() override;
+
+	void BackToMenu();
 };
