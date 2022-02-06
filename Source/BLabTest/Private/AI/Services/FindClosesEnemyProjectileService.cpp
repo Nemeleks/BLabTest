@@ -57,7 +57,7 @@ void UFindClosesEnemyProjectileService::TickNode(UBehaviorTreeComponent& OwnerCo
 						FVector ProjectileForwardDirection = Projectile->GetActorForwardVector();
 						FVector TraceEnd = ProjectileLocation + ProjectileForwardDirection*TraceRadius;
 						
-						if (UKismetSystemLibrary::SphereTraceMulti(GetWorld(), ProjectileLocation, TraceEnd, ProjectileSphereTraceRadius, ETraceTypeQuery::TraceTypeQuery3,
+						if (UKismetSystemLibrary::SphereTraceMulti(GetWorld(), ProjectileLocation, TraceEnd, ProjectileSphereTraceRadius, ETraceTypeQuery::TraceTypeQuery1,
 							false,ActorsToIgnore, EDrawDebugTrace::ForOneFrame, ProjectileHits, true, FColor::Yellow, FColor::Blue))
 						{
 							for (const auto ProjectileHit : ProjectileHits)

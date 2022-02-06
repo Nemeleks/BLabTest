@@ -29,8 +29,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
 	UArrowComponent* ProjectileSpawnPoint;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon Settings")
 	TSubclassOf<ABaseProjectile> ProjectileClass;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon Settings")
+	float FireRate = 0.5f;
 
 public:
 	// Called every frame
@@ -47,5 +50,9 @@ public:
 
 private:
 	bool bCanFire = true;
+
+	FTimerHandle FireRateTimerHandle;
+
+	void FireReload();
 	
 };

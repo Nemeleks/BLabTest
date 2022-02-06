@@ -6,7 +6,6 @@
 #include "Components/ArrowComponent.h"
 #include "Subsystems/ActorPoolSubsystem.h"
 #include "Weapons/Projectile/BaseProjectile.h"
-#include "Weapons/Projectile/TestProjectile.h"
 
 
 // Sets default values
@@ -40,7 +39,7 @@ void ABaseWeapon::Tick(float DeltaTime)
 
 void ABaseWeapon::Fire()
 {
-	if (ProjectileClass &&bCanFire)
+	if (ProjectileClass && bCanFire)
 	{
 		UActorPoolSubsystem* Pool = GetWorld()->GetSubsystem<UActorPoolSubsystem>();
 		FTransform SpawnTransform(ProjectileSpawnPoint->GetComponentRotation(), ProjectileSpawnPoint->GetComponentLocation(), FVector::OneVector);
@@ -50,6 +49,8 @@ void ABaseWeapon::Fire()
 		{
 			Projectile->SetInstigator(GetInstigator());
 			Projectile->Start(ProjectileSpawnPoint->GetForwardVector());
+			bCanFire = false;
+			GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this, &ABaseWeapon::FireReload, FireRate, false);
 		}
 		
 	}
@@ -71,5 +72,11 @@ void ABaseWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent
 	{
 		bCanFire = true;
 	}
+}
+
+void ABaseWeapon::FireReload()
+{
+	bCanFire = true;
+	GetWorld()->GetTimerManager().ClearTimer(FireRateTimerHandle);
 }
 
